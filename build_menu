@@ -13,7 +13,7 @@ export ANDROID_MAJOR_VERSION=r
 BUILD_CROSS_COMPILE=$PARENT_DIR/aarch64-linux-android-4.9/bin/aarch64-linux-android-
 KERNEL_LLVM_BIN=$PARENT_DIR/llvm-arm-toolchain-ship-10.0/bin/clang
 CLANG_TRIPLE=aarch64-linux-gnu-
-KERNEL_MAKE_ENV="LOCALVERSION=-afaneh92"
+KERNEL_MAKE_ENV="LOCALVERSION=-thefiredragon"
 
 DTS_DIR=$(pwd)/out/arch/$ARCH/boot/dts
 
@@ -32,7 +32,7 @@ pause(){
 
 variant(){
   findconfig=""
-  findconfig=($(ls arch/arm64/configs/vendor/afaneh_* 2>/dev/null))
+  findconfig=($(ls arch/arm64/configs/vendor/thefiredragon_* 2>/dev/null))
   declare -i i=1
   shift 2
   for e in "${findconfig[@]}"; do
@@ -82,7 +82,7 @@ build_kernel(){
   variant
   echo "${GREEN}***** Compiling kernel *****${STD}"
   [ ! -d "out" ] && mkdir out
-  make -j$(nproc) -C $(pwd) O=$(pwd)/out $KERNEL_MAKE_ENV ARCH=arm64 CROSS_COMPILE=$BUILD_CROSS_COMPILE REAL_CC=$KERNEL_LLVM_BIN CLANG_TRIPLE=$CLANG_TRIPLE CONFIG_SECTION_MISMATCH_WARN_ONLY=y vendor/afaneh_${VARIANT}_defconfig
+  make -j$(nproc) -C $(pwd) O=$(pwd)/out $KERNEL_MAKE_ENV ARCH=arm64 CROSS_COMPILE=$BUILD_CROSS_COMPILE REAL_CC=$KERNEL_LLVM_BIN CLANG_TRIPLE=$CLANG_TRIPLE CONFIG_SECTION_MISMATCH_WARN_ONLY=y vendor/thefiredragon_${VARIANT}_defconfig
   make -j$(nproc) -C $(pwd) O=$(pwd)/out $KERNEL_MAKE_ENV ARCH=arm64 CROSS_COMPILE=$BUILD_CROSS_COMPILE REAL_CC=$KERNEL_LLVM_BIN CLANG_TRIPLE=$CLANG_TRIPLE CONFIG_SECTION_MISMATCH_WARN_ONLY=y
 
   [ -e out/arch/arm64/boot/Image.gz ] && cp out/arch/arm64/boot/Image.gz $(pwd)/out/Image.gz
